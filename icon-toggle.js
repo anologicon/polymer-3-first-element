@@ -18,12 +18,18 @@ class IconToggle extends PolymerElement {
       </style>
 
       <!-- shadow DOM goes here -->
-      <iron-icon icon="[[toggleIcon]]" pressed></iron-icon>
+      <iron-icon icon="[[toggleIcon]]" pressed click></iron-icon>
+      <span>[[click]]</span>
     `;
   }
 
   static get properties() {
     return {
+      click: {
+        value: 0,
+        notify: true,
+        reflectToAttribute: true
+      },
       toggleIcon: {
         type: String
       },
@@ -39,10 +45,16 @@ class IconToggle extends PolymerElement {
   constructor() {
     super();
     this.addEventListener('click', this.toggle.bind(this));
+    this.addEventListener('click', this.countClicks.bind(this));
   }
 
   toggle() {
     this.pressed = !this.pressed;
+  }
+
+  countClicks() {
+    console.log(this.click);
+    return this.click = this.click + 1;
   }
 }
 
